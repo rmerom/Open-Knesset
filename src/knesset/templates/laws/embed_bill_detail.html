@@ -18,7 +18,7 @@ states:
 	5. vote-1 ("first-voted")
 	6. summoned-2
 	7. commity-2
-	8. vote-2 ("second-voted")
+	8. vote-2
 	9. vote-3 ("approval-voted")
 	10. passed ("approval-voted" == true)
 	
@@ -139,6 +139,13 @@ stream example:
                 var stagePassed = false;
 				switch (verb) {
 					case 'was-approval-voted':
+						{% if bill.approval_vote %}
+					    	$('ul#steps li#vote-3 .step .tooltip-score .balance').text('{{bill.approval_vote.for_votes_count}}/' +
+					    	        '{{bill.approval_vote.against_votes_count}}');
+                        {% else %}
+                            $('ul#steps li#vote-3 .step .tooltip-score').hide();
+                        {% endif %}
+						$('ul#steps li#vote-3').addClass('voted');
 						$('ul#steps li#vote-2 .date, ul#steps li#vote-3 .date').html(dateHtml);
 						if (stream[a]['note'] == 'True') {
 							finalStatus = true;
@@ -426,6 +433,13 @@ stream example:
 					{% endif %}
 					<a href="#" class="info">מידע</a>
 					<span class="icon">icon</span>
+					<div class="tooltip-score">
+						<span class="balance"></span>
+						<div class="scale" style="width:80px">
+							<span class="against" style="background-position: -47px bottom; width:53px"></span>
+							<span class="for"></span>
+						</div>
+					</div>
 					<div class="tooltip"><span>קריאה שלישית</span></div>
 					<span class="date">?</span>
 				</div>
