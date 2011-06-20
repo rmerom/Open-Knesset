@@ -1,6 +1,7 @@
 Adam Kariv
 Alon Levy
 Amir Yalon
+Amit Tzur
 Benny Daon
 Boris Dinkevich
 David Shimon
@@ -13,6 +14,7 @@ Near Privman
 Ofri Raviv
 Omer Gertel
 Ori Band
+Ron Merom
 Shahar Tal
 Yo'av Moshe
 Yoni Levy
