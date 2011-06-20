@@ -123,18 +123,19 @@ stream example:
 		}
 		
 		$(function() {
-			//showLog();
-			var finalStatus, stagePassed, phase = -1, committees = [], proposedDate, finalDate;
+			showLog();
+			var finalStatus, stagePassed, phase = -1, committees = [], proposedDate, finalDate, latestVerb;
 			for (var a in stream) {
 				// determine date
 				var d = new Date(stream[a]['time']*1000), day = d.getDate(), month = d.getMonth()+1, year = d.getFullYear(),
 				    dateHtml = day+'/'+month+'<br>'+year;
 				var verb = stream[a]['verb'], curPhase = phases[verb];
 				
-				if (curPhase > phase) phase = curPhase;
+				if (curPhase > phase) {
+				  phase = curPhase;
+				  latestVerb = verb;
+				}
 				
-				var currentStagePassed = true;
-                
                 var stagePassed = false;
 				switch (verb) {
 					case 'was-approval-voted':
@@ -217,11 +218,11 @@ stream example:
 			if (finalStatus) {
 			    $('.status').addClass('passed').text('אושרה');
 			} else if(finalStatus==false) {
-			    $(stageResolver.stepsStartingFromVerb(verb)).addClass('failed');
+			    $(stageResolver.stepsStartingFromVerb(latestVerb)).addClass('failed');
 			    $('.status').addClass('failed').text('נדחתה');
 			} else {
 				$('.status').hide();
-				$(stageResolver.stepsStartingFromVerb(verb, true)).addClass('pending');
+				$(stageResolver.stepsStartingFromVerb(latestVerb, true)).addClass('pending');
 			}
 			
 			// check if first vote is just about to happen
